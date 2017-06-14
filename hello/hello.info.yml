@@ -1,0 +1,4 @@
+name: hello
+description: my custom module named "hello"
+type: module
+core: 8.x

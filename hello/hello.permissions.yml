@@ -1,0 +1,9 @@
+access hello:
+    title: 'ma 1ere permission'
+    description: 'voilà voilà'
+    restrict access: 'true'
+    
+administer hello:
+    title: 'Admin Hello'
+    description: 'Ceux qui auront cette permission pourront configurer la couleur des blocks et avoir accès à la calculette'
+    restrict acces: 'true'

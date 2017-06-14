@@ -1,0 +1,23 @@
+hello.lien_vers_hello_page:
+  title: 'hello'
+  route_name: hello.hello
+  menu_name: main
+  
+hello.lien_vers_list_hello:
+  title: 'list'
+  route_name: hello.list
+  menu_name: main
+  
+hello.lien_vers_form:
+  title: 'Formulaire'
+  route_name: hello.form
+  menu_name: main
+  
+hello.lien_vers_form_config:
+  title: 'Block Color'
+  route_name: hello.form.config
+  menu_name: admin
+  
+  
+ 
+  

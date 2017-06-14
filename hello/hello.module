@@ -1,0 +1,89 @@
+<?php
+
+use Drupal\node\NodeInterface;
+use Drupal\Core\Database\Connection;
+use Drupal\Core\Form\FormStateInterface;
+
+function hello_cron() {
+	drupal_set_message(t("Hello module cron task done"), 'warning');
+}
+
+function hook_user_logout($account) {
+	drupal_set_message('Welcome dear %name', array('%name' => $account->getAccountName()));
+}
+
+function hello_node_update($node){
+
+  $uid  = $node->getRevisionUserId();
+  $nid  = $node->id();
+  $time = $node->getChangedTime();
+
+
+  $database = \Drupal::database();
+  $database->insert('hello_node_history')->fields(
+    array(
+      'nid'         => $nid,
+      'uid'         => $uid,
+      'update_time' => $time,
+    )
+  )->execute();
+}
+
+/* function hello_node_update(NodeInterface $node) {
+	$user = \Drupal::currentUser();
+	$database = \Drupal::database();
+	$database->insert('hello_node_history')
+		->fields(array(
+			'nid' => $node->id(),
+			'uid' => $user->id(),
+			'update_time' => time(),
+	))->execute(); 
+	}
+ */
+ 
+ function hello_page_attachments(array &$page) {
+	 $page['#attached']['library'][] = 'hello/hello';
+ }
+ 
+ function hello_preprocess_block  (array &$variables) {
+	$class = \Drupal::config('hello.config')->get('color');
+	$variables['attributes']['class'][] = $class;
+ }
+ 
+ function hello_theme ($existing, $type, $theme, $path) {
+	 return array(
+	 'hello' => array(
+		'template' => 'hello',
+		'variables' => array('node' => NULL,
+							 'count' => NULL	),
+		),
+	);
+/* 	$output = array(
+	'#theme' => 'hello',
+	'#node' => 'demo',
+	'#count' => 'demo',
+	); */
+ }
+	 
+ function hello_form_alter(array &$form, FormStateInterface &$form_state,$form_id) {
+	if ($form_id == 'contact_message_feedback_form') {
+	/* kint($form); */
+	/* kint($form_id); */
+	
+	$form['tel'] = array(
+		'#type' => 'tel',
+		'#title' => t('telephone'),
+		'#description' => t('enter here your phone number'),
+		'#required' => FALSE,
+		);
+		
+	$form['subject']= array(
+		'#access' => FALSE,
+		);
+		
+	$form['actions']['submit']['#value'] = t('Send Now!');
+	;}
+		
+	/* $form['actions']['submit']['#validate'][] = 'send message NOW';
+	$form['actions']['submit']['#submit'] = array('send message NOW');	 */
+ }

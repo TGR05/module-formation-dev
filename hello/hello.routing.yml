@@ -1,0 +1,62 @@
+hello.hello:
+  path: '/hello/{paramuser}'
+  defaults:
+    _controller: '\Drupal\hello\Controller\HelloController::content'
+    _title: 'hello'
+    paramuser: null
+  requirements:
+    _access: 'TRUE'
+    
+hello.rss:
+  path: '/hello-rss'
+  defaults:
+    _controller: '\Drupal\hello\Controller\HelloRssController::content'
+    _title: 'Sessions'
+  requirements:
+    _access: 'TRUE'
+    
+hello.list:
+  path: '/hello-list/{nodetype}'
+  defaults:
+    _controller: '\Drupal\hello\Controller\HelloListController::content'
+    _title: 'list'
+    nodetype: null
+  requirements:
+    _access: 'TRUE'   
+
+hello.node_history:
+  path: '/node/{node}/history'
+  defaults:
+    _controller: '\Drupal\hello\Controller\HelloHistoryController::history'
+    _title: 'history'
+  requirements:
+    _access: 'TRUE'  
+     
+    
+hello.form:
+  path: '/form'
+  defaults:
+    _form: '\Drupal\hello\Form\HelloForm'
+    _title: 'Formulaire'
+  requirements:
+    _access: 'TRUE'  
+    _permission: 'access hello'
+     
+       
+hello.form.config:
+  path: '/admin/appearence/block-color'
+  defaults:
+    _form: '\Drupal\hello\Form\HelloFormConfig'
+    _title: 'Formulaire de configuration'
+  requirements:
+    _access: 'TRUE'       
+    _permission: 'administer hello'
+    
+hello.access:
+   path: '/hello-access'
+   defaults:
+      _controller: '\Drupal\hello\Controller\HelloAccessController::content'
+      _title: 'Example access'
+   requirements:
+      _access_hello: '48'
+      

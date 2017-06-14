@@ -1,0 +1,74 @@
+<?php
+
+/**
+ * @file
+ * Contains install and update functions for hello.
+ */
+
+
+ 	 use Drupal\Core\Database\Database;
+
+/**
+ * Implements hook_install().
+ */
+function hello_install() {
+	
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function hello_uninstall() {
+  \Drupal::state()->delete('submission_time');
+}
+
+/**
+ * Implements hook_schema().
+ */
+function hello_schema() {
+	
+$schema['hello_node_history'] = array(
+  'description' => 'The table for update history',
+  'fields' => array(
+	'hid'       	=> array('type' => 'serial', 'not null' => TRUE),
+    'nid'       	=> array('type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE, 'length' => 10),
+	'uid' 			=> array('type' => 'int', 'not null' => TRUE, 'length' => 10),
+    'update_time'   => array('type' => 'int', 'not null' => TRUE, 'length' => 11),
+  ),
+  'primary key' => array('hid'),
+  );
+  return $schema;
+}
+
+
+/**
+ * add a field in the table.
+ */
+function hello_update_8301() {
+	  
+	 $schema = Database::getConnection()->schema();
+	 $schema->addField('hello_node_history', 'uid', array('type' => 'int', 'not null' => TRUE, 'length' => 10));
+	
+	/* façon plus propre */
+    /* $schema = Database::getConnection()->schema(); 
+	/* $schema->addField('hello_node_history', 'uid', $field_specs); 
+	/* $field_specs = array('type' => 'int', 'not null' => TRUE, 'length' => 10) */
+}
+
+/**
+ * add a 2nd field in the table : update author PAS DU TOUT !! FAUX
+ */
+/* function hello_update_8302() {
+	  
+	$schema = Database::getConnection()->schema();
+	$schema->addField('hello_node_history', 'Update_author', $field_specs); 
+	$field_specs = array('type' => 'int', 'not null' => TRUE, 'length' => 10) 
+	
+	function hello_node_update(Drupal Core Entity EntityInterface $node) {
+	db_update('hello_node_history')
+    ->fields(array('' => $node->))
+    ->condition('', $node->id())
+    ->execute();
+}
+	
+} */
